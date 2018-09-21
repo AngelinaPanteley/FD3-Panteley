@@ -23,7 +23,7 @@ var ProductTable = React.createClass({
         });
 
         return React.DOM.table({className: 'product-table'},
-            React.createElement(ProductTableHeader, {titles: Object.keys(products[0]), keys: ids}),
+            React.createElement(ProductTableHeader, {titles: Object.keys(products[0])}),
             React.createElement(ProductTableBody, {rows: products, keys: ids})
         );
     },
@@ -34,10 +34,9 @@ var ProductTableHeader = React.createClass({
     displayName: 'ProductTableHeader',
 
     render: function () {
-        const keys = this.props.keys;
         const headerRow = React.DOM.tr({className: 'product-table__row'},
             this.props.titles.map(function (title, index) {
-                return React.DOM.td({className: 'product-table__column', key: keys[index]}, title)
+                return React.DOM.td({className: 'product-table__column', key: index}, title)
             })
         );
 

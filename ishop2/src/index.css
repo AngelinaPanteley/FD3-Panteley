@@ -1,0 +1,21 @@
+.product-table {
+  border-collapse: collapse;
+  border-bottom: 1px solid #c3c0c0;
+  width: 100%;
+}
+
+.product-table__header {
+  text-transform: uppercase;
+}
+
+.product-table__row {
+  border-bottom: 1px solid #c3c0c0;
+}
+
+.product-table__column {
+  padding: 10px 0;
+}
+
+.product-table__img {
+  max-height: 140px;
+}

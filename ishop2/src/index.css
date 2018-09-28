@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 .product-table {
   border-collapse: collapse;
   border-bottom: 1px solid #c3c0c0;
@@ -12,8 +16,12 @@
   border-bottom: 1px solid #c3c0c0;
 }
 
+.product-table__row.selected {
+  background: #FFC107;
+}
+
 .product-table__column {
-  padding: 10px 0;
+  padding: 10px;
 }
 
 .product-table__img {

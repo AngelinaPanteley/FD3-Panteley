@@ -1,0 +1,16 @@
+.product-card {
+  display: flex;
+  margin: 40px 0;
+}    
+
+.product-card__photo {
+  height: 200px;
+  margin: 0 20px;
+}
+
+.product-card__name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 5px;
+  margin-bottom: 30px;
+}

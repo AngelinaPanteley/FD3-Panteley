@@ -1,0 +1,15 @@
+.product-table__row {
+  border-bottom: 1px solid #c3c0c0;
+}
+
+.product-table__row.selected {
+  background: #FFC107;
+}
+
+.product-table__column {
+  padding: 10px;
+}
+
+.product-table__img {
+  max-height: 40px;
+}

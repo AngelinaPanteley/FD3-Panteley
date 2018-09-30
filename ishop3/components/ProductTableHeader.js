@@ -10,6 +10,9 @@ export default class ProductTableHeader extends Component {
   render() {
     const headerRow = <tr className='product-table__row'>
       {this.props.titles.map(function (title, index) {
+        if (title === 'price') {
+          title += ', $';
+        }
         return <td className='product-table__column' key={index}>{title}</td>
       })}
       <td>Control</td>

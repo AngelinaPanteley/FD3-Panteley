@@ -1,0 +1,14 @@
+.product-form-field {
+  margin: 10px 0; 
+}
+
+.product-form-field__label {
+  width: 100px;
+  display: inline-block;
+}
+
+.product-form-field__error {
+  display: inline-block;
+  margin: 0 10px;
+  color: red;
+}

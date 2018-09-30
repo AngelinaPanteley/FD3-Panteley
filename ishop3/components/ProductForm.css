@@ -1,0 +1,12 @@
+.product-form {
+  margin: 10px; 
+}
+
+.product-form__title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.product-form__buttons input {
+  margin-right: 10px;
+}

@@ -8,27 +8,22 @@ export default class ProductTableBody extends Component {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
-        price: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
         photo: PropTypes.string.isRequired,
         qty: PropTypes.number.isRequired,
         color: PropTypes.string,
       })
     ).isRequired,
+    keys: PropTypes.arrayOf(
+      PropTypes.number
+    ).isRequired,
+    selectedRowId: PropTypes.number,
+    onRowDelete: PropTypes.func.isRequired,
+    onRowSelect: PropTypes.func.isRequired,
+    onRowEdit: PropTypes.func.isRequired,
   }
 
-  state = {
-    selectedRow: null,
-  }
-
-  onRowClick = (e) => {
-    const selected = e.target.closest('tr').getAttribute('data-index');
-    this.setState({
-      selectedRow: selected,
-    });
-    this.props.onRowSelect(selected);
-  }
-
-  render() {
+  getRows() {
     const keys = this.props.keys;
     let photoKeyIndex;
     const rows = this.props.rows.map((item, index) => {
@@ -39,13 +34,20 @@ export default class ProductTableBody extends Component {
         return item[key];
       });
 
-      const selected = productValues[0] == this.state.selectedRow;
+      const selected = productValues[0] == this.props.selectedRowId;
 
       return <ProductTableRow key={keys[index]} productValues={productValues}
         photoKeyIndex={photoKeyIndex} onRowClick={this.onRowClick}
         onRowDelete={this.props.onRowDelete}
+        onRowEdit={this.props.onRowEdit}
+        onRowSelect={this.props.onRowSelect}
         selected={selected} />;
     });
+    return rows;
+  }
+
+  render() {
+    const rows = this.getRows();
 
     return <tbody className='product-table__body'>{rows}</tbody>;
   }

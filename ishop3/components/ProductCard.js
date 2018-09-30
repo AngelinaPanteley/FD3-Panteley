@@ -7,7 +7,7 @@ export default class ProductCard extends Component {
     product: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      price: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
       photo: PropTypes.string.isRequired,
       qty: PropTypes.number.isRequired,
       color: PropTypes.string,
@@ -20,7 +20,7 @@ export default class ProductCard extends Component {
       <img src={photo} alt="product-card" className="product-card__photo" />
       <div className="product-card__info">
         <p className="product-card__name">{name}</p>
-        <p>Price: {price}</p>
+        <p>Price: {price}$</p>
         <p>Color: {color}</p>
         <p>Qty: {qty}</p>
       </div>

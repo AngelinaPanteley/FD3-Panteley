@@ -14,14 +14,14 @@ class Rainbow extends React.Component {
     super(props);
 
     this.state = {
-      frames: this.createFrames(props),
+      frames: this.createFrames(props.colors),
     }
   }
 
-  createFrames(props) {
+  createFrames(colors) {
     let frames = [];
 
-    props.colors.forEach((color, index) => {
+    colors.forEach((color, index) => {
       frames.push(
         <ColorFrame color={color}>
           {!!(index - 1 >= 0) && frames[index - 1]}

@@ -8,9 +8,9 @@ import Rainbow from './components/Rainbow';
 let colorsArr = require('./colors.json');
 
 ReactDOM.render(
-  <Rainbow
-    colors={colorsArr}
-  />
+  <Rainbow colors={colorsArr}>
+    Insert text
+  </Rainbow>
   , document.getElementById('container')
 );
 

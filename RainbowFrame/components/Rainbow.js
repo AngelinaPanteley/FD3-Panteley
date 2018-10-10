@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
-import ColorFrame from './ColorFrame';
 
 class Rainbow extends React.Component {
 
@@ -23,9 +22,15 @@ class Rainbow extends React.Component {
 
     colors.forEach((color, index) => {
       frames.push(
-        <ColorFrame color={color}>
-          {!!(index - 1 >= 0) && frames[index - 1]}
-        </ColorFrame>
+        <div style={{ border: "solid 6px " + color }}>
+          {
+            (index - 1 >= 0)
+              ?
+              frames[index - 1]
+              :
+              this.props.children
+          }
+        </div>
       );
     });
 

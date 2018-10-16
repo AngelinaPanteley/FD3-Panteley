@@ -1,0 +1,25 @@
+﻿.MobileCompany
+{
+  border: double gray 3px;
+  display: inline-block;
+  padding: 3px 7px;
+  background-color: lightyellow;
+}
+
+.MobileCompanyName
+{
+  font-weight: bold;
+}
+
+.MobileCompanyClients
+{
+  padding-top: 5px;
+}
+
+.MobileNewClientButton {
+  margin-top: 20px;
+}
+
+.MobileCompanyChangeTitle {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,36 @@
+﻿div.MobileClient
+{
+  padding: 2px 0;
+}
+
+.MobileClientBalance
+{
+  width: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.MobileClientFIO
+{
+  display: inline-flex;
+  width: 300px;
+  padding-right: 20px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.MobileClientActions {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.MobileClientActions button {
+  margin: 0 5px;
+}
+
+.MobileClientStatus {
+  display: inline-block;
+  margin-left: 25px;
+}

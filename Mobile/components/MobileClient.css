@@ -1,6 +1,8 @@
 ﻿div.MobileClient
 {
   padding: 2px 0;
+  display: flex;
+  align-items: center;
 }
 
 .MobileClientBalance
@@ -11,7 +13,7 @@
   justify-content: space-between;
 }
 
-.MobileClientFIO
+.MobileClientFio
 {
   display: inline-flex;
   width: 300px;
@@ -19,6 +21,20 @@
   justify-content: space-between;
   box-sizing: border-box;
   align-items: center;
+}
+
+.MobileClientFioForm {
+  display: inline-flex;
+}
+
+.MobileClientFioForm input {
+  width: 30%;
+}
+
+.MobileClientFioContainer {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .MobileClientActions {
@@ -33,4 +49,13 @@
 .MobileClientStatus {
   display: inline-block;
   margin-left: 25px;
+  width: 50px;
+}
+
+.MobileClientStatusActive {
+  color: green;
+}
+
+.MobileClientStatusBlocked {
+  color: red;
 }

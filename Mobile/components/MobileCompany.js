@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 
-import MobileClients from './MobileClients';
+import MobileClient from './MobileClient';
 
 import './MobileCompany.css';
 
@@ -9,7 +9,7 @@ class MobileCompany extends React.PureComponent {
 
   static propTypes = {
     name: PropTypes.string.isRequired,
-    clients:PropTypes.arrayOf(
+    clients: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         fam: PropTypes.string.isRequired,
@@ -22,74 +22,160 @@ class MobileCompany extends React.PureComponent {
 
   state = {
     name: this.props.name,
-    clients: this.props.clients,
+    clients: this.props.clients.map((c) => {
+      c.isShown = true;
+      return c;
+    }),
   };
 
   setName = (e) => {
-    this.setState({name:e.target.value});
-  };
-  
-  setClientBalance = (clientId,newBalance) => {
-    let changed=false;
-    let newClients=[...this.state.clients];
-    newClients.forEach( (c,i) => {
-      if ( c.id==clientId ) {
-        let newClient={...c};
-        newClient.balance=newBalance;
-        newClients[i]=newClient;
-        changed=true;
-      }
-    } );
-    if ( changed )
-      this.setState({clients:newClients});
+    this.setState({ name: e.target.value });
   };
 
-  setClientFIO = (clientId,newFIO) => {
-    let changed=false;
-    let newClients=[...this.state.clients];
-    newClients.forEach( (c,i) => {
-      if ( c.id==clientId && (c.fam!==FIO.fam || c.im!==FIO.im || c.otch!==FIO.otch )) {
-        let newClient={...c};
-        newClient.fam=FIO.fam;
-        newClient.im=FIO.im;
-        newClient.otch=FIO.otch;
-        newClients[i]=newClient;
-        changed=true;
+  setClientBalance = (clientId, newBalance) => {
+    let changed = false;
+    let newClients = [...this.state.clients];
+    newClients.forEach((c, i) => {
+      if (c.id == clientId) {
+        let newClient = { ...c };
+        newClient.balance = newBalance;
+        newClients[i] = newClient;
+        changed = true;
       }
-    } );
-    if ( changed ) 
-      this.setState({clients:newClients});
+    });
+    if (changed)
+      this.setState({ clients: newClients });
+  };
+
+  setClientFIO = (clientId, newFIO) => {
+    let changed = false;
+    let newClients = [...this.state.clients];
+
+    newClients.forEach((c, i) => {
+      if (c.id == clientId && (c.fam !== newFIO.fam || c.im !== newFIO.im || c.otch !== newFIO.otch)) {
+        let newClient = { ...c };
+        newClient.fam = newFIO.fam;
+        newClient.im = newFIO.im;
+        newClient.otch = newFIO.otch;
+        newClients[i] = newClient;
+        changed = true;
+      }
+    });
+    if (changed)
+      this.setState({ clients: newClients });
   };
 
   deleteClient = (clientId) => {
-    let newClients=[...this.state.clients];
-    newClients.forEach( (c,i) => {
-      if ( c.id==clientId ) {
+    let newClients = [...this.state.clients];
+    newClients.forEach((c, i) => {
+      if (c.id == clientId) {
         newClients.splice(i, 1);
         return;
       }
-    } );
-    this.setState({clients:newClients});
+    });
+    this.setState({ clients: newClients });
+  };
+
+  addClient = () => {
+    const currentClients = this.state.clients;
+    const newClientId = currentClients[currentClients.length - 1].id + 1;
+    const newClients = [...this.state.clients];
+    const newClient = {
+      id: newClientId,
+      fam: '',
+      im: '',
+      otch: '',
+      balance: 0,
+      isEdit: true,
+    }
+    newClients.push(newClient);
+    this.setState({ clients: newClients });
   }
-  
+
+  filterClients = (e) => {
+    const newFilter = e.target.value;
+    if (newFilter !== this.state.filter) {
+      let newClients = [...this.state.clients];
+      let changed = false;
+
+      const changeFlag = (c, i, flagValue) => {
+        const newClient = { ...c };
+        newClient.isShown = flagValue;
+        newClients[i] = newClient;
+        changed = true;
+      };
+
+      if (newFilter === 'all') {
+        newClients.forEach((c, i) => {
+          if (!c.isShown) {
+            changeFlag(c, i, true);
+          }
+        });
+      } else if (newFilter === 'active') {
+        newClients.forEach((c, i) => {
+          if (c.balance >= 0 && !c.isShown) {
+            changeFlag(c, i, true);
+          } else if (c.balance < 0 && c.isShown) {
+            changeFlag(c, i, false);
+          }
+        });
+      } else if (newFilter === 'blocked') {
+        newClients.forEach((c, i) => {
+          if (c.balance >= 0 && c.isShown) {
+            changeFlag(c, i, false);
+          } else if (c.balance < 0 && !c.isShown) {
+            changeFlag(c, i, true);
+          }
+        });
+      }
+
+      this.setState({
+        filter: newFilter,
+      });
+
+      if (changed) {
+        this.setState({
+          clients: newClients,
+        });
+      }
+    }
+  }
+
   render() {
 
     console.log("MobileCompany render");
+
+    const clients = this.state.clients.map(client => {
+      return <MobileClient key={client.id}
+        client={client}
+        onDelete={this.deleteClient}
+        onFIOChange={this.setClientFIO}
+        onBalanceChange={this.setClientBalance} />
+    });
 
     return (
       <div className='MobileCompany'>
         <div className="MobileCompanyChangeTitle">
           <input type="button" value="МТС" onClick={this.setName} />
           <input type="button" value="Velcom" onClick={this.setName} />
-        </div> 
+          <div className="NameMobileCompanyFilter">
+            <label htmlFor="filter">Show</label>
+            <select id="filter" value={this.state.filter} onChange={this.filterClients}>
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="blocked">Blocked</option>
+            </select>
+          </div>
+        </div>
         <div className='MobileCompanyName'>Компания &laquo;{this.state.name}&raquo;</div>
         <div className='MobileCompanyClients'>
-          <MobileClients clients = {this.state.clients} onDelete={this.deleteClient}/>
+          {clients}
         </div>
-        <button className="MobileNewClientButton">Добавить</button>
+        <button className="MobileNewClientButton" onClick={this.addClient}>
+          Add new client
+        </button>
       </div>
-    )
-    ;
+    );
 
   }
 

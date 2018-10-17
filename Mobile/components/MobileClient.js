@@ -35,6 +35,11 @@ class MobileClient extends React.PureComponent {
     }, balance: newProps.client.balance });
   };
 
+  deleteHandle = () => {
+    console.log('deleteHandle')
+    this.props.onDelete(this.props.client.id);
+  }
+
   render() {
 
     console.log("MobileClient id="+this.props.client.id+" render");
@@ -61,7 +66,7 @@ class MobileClient extends React.PureComponent {
         </div>
         <div className='MobileClientActions'>
           <button>Edit</button>
-          <button>Delete</button>
+          <button onClick={this.deleteHandle}>Delete</button>
         </div>
       </div>
     );

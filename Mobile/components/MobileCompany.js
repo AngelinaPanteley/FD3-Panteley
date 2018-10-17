@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 
-import MobileClient from './MobileClient';
+import MobileClients from './MobileClients';
 
 import './MobileCompany.css';
 
@@ -25,12 +25,6 @@ class MobileCompany extends React.PureComponent {
     clients: this.props.clients,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.clientsForRender = this.state.clients.map( client => <MobileClient key={client.id} client={client} /> );
-  };
-
   setName = (e) => {
     this.setState({name:e.target.value});
   };
@@ -47,7 +41,7 @@ class MobileCompany extends React.PureComponent {
       }
     } );
     if ( changed )
-      this.setState({clients:newClients}, this.clientsUpdate);
+      this.setState({clients:newClients});
   };
 
   setClientFIO = (clientId,newFIO) => {
@@ -64,14 +58,18 @@ class MobileCompany extends React.PureComponent {
       }
     } );
     if ( changed ) 
-      this.setState({clients:newClients}, this.clientsUpdate);
+      this.setState({clients:newClients});
   };
 
-  clientsUpdate(newProps, newState) {
-    this.clientsForRender=newState.clients.map( client => {
-      let FIO={fam:client.fam,im:client.im,otch:client.otch};
-      return <MobileClient key={client.id} id={client.id} FIO={FIO} balance={client.balance} />;
-    });
+  deleteClient = (clientId) => {
+    let newClients=[...this.state.clients];
+    newClients.forEach( (c,i) => {
+      if ( c.id==clientId ) {
+        newClients.splice(i, 1);
+        return;
+      }
+    } );
+    this.setState({clients:newClients});
   }
   
   render() {
@@ -86,7 +84,7 @@ class MobileCompany extends React.PureComponent {
         </div> 
         <div className='MobileCompanyName'>Компания &laquo;{this.state.name}&raquo;</div>
         <div className='MobileCompanyClients'>
-          { this.clientsForRender }
+          <MobileClients clients = {this.state.clients} onDelete={this.deleteClient}/>
         </div>
         <button className="MobileNewClientButton">Добавить</button>
       </div>

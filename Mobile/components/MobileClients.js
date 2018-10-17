@@ -25,7 +25,7 @@ class MobileClients extends React.PureComponent {
         <div>
         {
             this.props.clients.map( client => {
-                return <MobileClient key={client.id} client={client} onDelete={this.props.deleteClient}/> 
+                return <MobileClient key={client.id} client={client} onDelete={this.props.onDelete}/> 
             })
         }
         </div>

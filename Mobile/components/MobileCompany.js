@@ -78,15 +78,16 @@ class MobileCompany extends React.PureComponent {
 
   addClient = () => {
     const currentClients = this.state.clients;
-    const newClientId = currentClients[currentClients.length - 1].id + 1;
+    const newClientId = currentClients.length === 0? 1 : currentClients[currentClients.length - 1].id + 1;
     const newClients = [...this.state.clients];
     const newClient = {
       id: newClientId,
       fam: '',
       im: '',
       otch: '',
-      balance: 0,
+      balance: this.state.filter === 'blocked'? -1 : 0,
       isEdit: true,
+      isShown: true,
     }
     newClients.push(newClient);
     this.setState({ clients: newClients });
@@ -156,8 +157,10 @@ class MobileCompany extends React.PureComponent {
     return (
       <div className='MobileCompany'>
         <div className="MobileCompanyChangeTitle">
-          <input type="button" value="МТС" onClick={this.setName} />
-          <input type="button" value="Velcom" onClick={this.setName} />
+          <div>
+            <input type="button" value="МТС" onClick={this.setName} />
+            <input type="button" value="Velcom" onClick={this.setName} />
+          </div>
           <div className="NameMobileCompanyFilter">
             <label htmlFor="filter">Show</label>
             <select id="filter" value={this.state.filter} onChange={this.filterClients}>

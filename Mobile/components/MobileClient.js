@@ -15,6 +15,9 @@ class MobileClient extends React.PureComponent {
       isEdit: PropTypes.bool,
       isShown: PropTypes.bool.isRequired,
     }),
+    onDelete: PropTypes.func.isRequired,
+    onFIOChange: PropTypes.func.isRequired,
+    onBalanceChange: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -95,13 +98,15 @@ class MobileClient extends React.PureComponent {
   }
 
   render() {
-
     console.log("MobileClient id=" + this.props.client.id + " render");
+
     const FIO = this.state.FIO;
+    
     return (
       <div>
         {
           this.props.client.isShown && <div className='MobileClient'>
+            <span className="MobileClientId">{this.props.client.id}</span>
             <div className='MobileClientFio'>
               {
                 this.state.isEdit

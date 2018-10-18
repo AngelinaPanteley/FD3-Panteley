@@ -1,18 +1,15 @@
-﻿.MobileCompany
-{
+﻿.MobileCompany {
   border: double gray 3px;
   display: inline-block;
   padding: 3px 7px;
   background-color: lightyellow;
 }
 
-.MobileCompanyName
-{
+.MobileCompanyName {
   font-weight: bold;
 }
 
-.MobileCompanyClients
-{
+.MobileCompanyClients {
   padding-top: 5px;
 }
 
@@ -22,4 +19,7 @@
 
 .MobileCompanyChangeTitle {
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }

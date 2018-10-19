@@ -66,12 +66,16 @@ class MobileCompany extends React.PureComponent {
     let newClient;
 
     newClients.forEach((c, i) => {
-      if (c.id == clientId && (c.fam !== newFIO.fam || c.im !== newFIO.im || c.otch !== newFIO.otch)) {
+      if (c.id == clientId) {
         newClient = { ...c };
-        newClient.fam = newFIO.fam;
-        newClient.im = newFIO.im;
-        newClient.otch = newFIO.otch;
         newClient.isEdit = false;
+
+        if(c.fam !== newFIO.fam || c.im !== newFIO.im || c.otch !== newFIO.otch) {
+          newClient.fam = newFIO.fam;
+          newClient.im = newFIO.im;
+          newClient.otch = newFIO.otch;
+        }
+        
         newClients[i] = newClient;
         changed = true;
       }

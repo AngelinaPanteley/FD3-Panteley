@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
-import deepEqual from 'deep-equal';
 
 import './MobileClient.css';
 

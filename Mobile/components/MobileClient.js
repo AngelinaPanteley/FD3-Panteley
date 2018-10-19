@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
+import deepEqual from 'deep-equal';
 
 import './MobileClient.css';
 
@@ -12,49 +13,45 @@ class MobileClient extends React.PureComponent {
       im: PropTypes.string.isRequired,
       otch: PropTypes.string.isRequired,
       balance: PropTypes.number.isRequired,
-      isEdit: PropTypes.bool,
-      isShown: PropTypes.bool.isRequired,
+      isEdit: PropTypes.bool.isRequired,
     }),
     onDelete: PropTypes.func.isRequired,
     onFIOChange: PropTypes.func.isRequired,
     onBalanceChange: PropTypes.func.isRequired,
   };
 
-  static defaultProps = {
-    client: {
-      isEdit: false,
-    }
-  }
-
   state = {
-    FIO: {
-      fam: this.props.client.fam,
-      im: this.props.client.im,
-      otch: this.props.client.otch,
-    },
+    fam: this.props.client.fam,
+    im: this.props.client.im,
+    otch: this.props.client.otch,
     balance: this.props.client.balance,
     isActive: this.props.client.balance >= 0,
     isEdit: this.props.client.isEdit,
   };
 
   componentWillReceiveProps = (newProps) => {
-    const FIO = this.state.FIO;
+    const {fam, im, otch} = this.state;
     const newClient = newProps.client;
-    if (FIO.fam !== newClient.fam || FIO.im !== newClient.im || FIO.otch !== newClient.otch) {
+
+    if (fam !== newClient.fam || im !== newClient.im || otch !== newClient.otch) {
       this.setState({
-        FIO: {
-          fam: newClient.fam,
-          im: newClient.im,
-          otch: newClient.otch,
-        },
+        fam: newClient.fam,
+        im: newClient.im,
+        otch: newClient.otch,
         isEdit: false,
       });
     }
 
     if (this.state.balance !== newClient.balance) {
       this.setState({
-        balance: newProps.client.balance,
-        isActive: newProps.client.balance >= 0,
+        balance: newClient.balance,
+        isActive: newClient.balance >= 0,
+      });
+    }
+
+    if (this.state.isEdit !== newClient.isEdit) {
+      this.setState({
+        isEdit: newClient.isEdit,
       });
     }
   };
@@ -68,21 +65,11 @@ class MobileClient extends React.PureComponent {
   }
 
   increaseBalance = () => {
-    this.props.onBalanceChange(this.props.client.id, ++this.state.balance);
-    if (this.state.balance === 0) {
-      this.setState({
-        isActive: true,
-      });
-    }
+    this.props.onBalanceChange(this.props.client.id, this.state.balance + 1);
   }
 
   decreaseBalance = () => {
-    this.props.onBalanceChange(this.props.client.id, --this.state.balance);
-    if (this.state.balance === -1) {
-      this.setState({
-        isActive: false,
-      });
-    }
+    this.props.onBalanceChange(this.props.client.id, this.state.balance - 1);
   }
 
   saveForm = (e) => {
@@ -94,55 +81,52 @@ class MobileClient extends React.PureComponent {
       otch: form.otch.value,
     };
     this.props.onFIOChange(this.props.client.id, FIO);
-    this.setState({ isEdit: false });
   }
 
   render() {
     console.log("MobileClient id=" + this.props.client.id + " render");
 
-    const FIO = this.state.FIO;
-    
+    const {fam, im, otch} = this.state;
+
     return (
       <div>
-        {
-          this.props.client.isShown && <div className='MobileClient'>
-            <span className="MobileClientId">{this.props.client.id}</span>
-            <div className='MobileClientFio'>
-              {
-                this.state.isEdit
-                  ?
-                  <form onSubmit={this.saveForm} className="MobileClientFioForm">
-                    <input type="text" defaultValue={FIO.fam} name="fam" />
-                    <input type="text" defaultValue={FIO.im} name="im" />
-                    <input type="text" defaultValue={FIO.otch} name="otch" />
-                    <input type="submit" value="Save" />
-                  </form>
-                  :
-                  <div className="MobileClientFioContainer">
-                    <span>{FIO.fam + " " + FIO.im + " " + FIO.otch}</span>
-                    <button onClick={this.editButtonHandle}>Edit</button>
-                  </div>
-              }
-            </div>
-            <div className='MobileClientBalance'>
-              <button onClick={this.decreaseBalance}>-</button>
-              <span>{this.state.balance}</span>
-              <button onClick={this.increaseBalance}>+</button>
-            </div>
-            <div className='MobileClientStatus'>
-              {
-                this.state.isActive
-                  ?
-                  <span className='MobileClientStatusActive'>Active</span>
-                  :
-                  <span className='MobileClientStatusBlocked'>Blocked</span>
-              }
-            </div>
-            <div className='MobileClientActions'>
-              <button onClick={this.deleteHandle}>Delete</button>
-            </div>
+        <div className='MobileClient'>
+          <span className="MobileClientId">{this.props.client.id}</span>
+          <div className='MobileClientFio'>
+            {
+              this.state.isEdit
+                ?
+                <form onSubmit={this.saveForm} className="MobileClientFioForm">
+                  <input type="text" defaultValue={fam} name="fam" />
+                  <input type="text" defaultValue={im} name="im" />
+                  <input type="text" defaultValue={otch} name="otch" />
+                  <input type="submit" value="Save" />
+                </form>
+                :
+                <div className="MobileClientFioContainer">
+                  <span>{fam + " " + im + " " + otch}</span>
+                  <button onClick={this.editButtonHandle}>Edit</button>
+                </div>
+            }
           </div>
-        }
+          <div className='MobileClientBalance'>
+            <button onClick={this.decreaseBalance}>-</button>
+            <span>{this.state.balance}</span>
+            <button onClick={this.increaseBalance}>+</button>
+          </div>
+          <div className='MobileClientStatus'>
+            {
+              this.state.isActive
+                ?
+                <span className='MobileClientStatusActive'>Active</span>
+                :
+                <span className='MobileClientStatusBlocked'>Blocked</span>
+            }
+          </div>
+          <div className='MobileClientActions'>
+            <button onClick={this.deleteHandle}>Delete</button>
+          </div>
+        </div>
       </div>
     );
 

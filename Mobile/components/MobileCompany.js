@@ -22,10 +22,8 @@ class MobileCompany extends React.PureComponent {
 
   state = {
     name: this.props.name,
-    clients: this.props.clients.map((c) => {
-      c.isShown = true;
-      return c;
-    }),
+    clients: this.props.clients.map((c) => { c.isEdit = false; return c }),
+    filteredClients: this.props.clients.map((c) => { c.isEdit = false; return c }),
   };
 
   setName = (e) => {
@@ -35,110 +33,131 @@ class MobileCompany extends React.PureComponent {
   setClientBalance = (clientId, newBalance) => {
     let changed = false;
     let newClients = [...this.state.clients];
+    let newFilteredClients = [...this.state.filteredClients];
+    let newClient;
+
     newClients.forEach((c, i) => {
       if (c.id == clientId) {
-        let newClient = { ...c };
+        newClient = { ...c };
         newClient.balance = newBalance;
         newClients[i] = newClient;
         changed = true;
       }
     });
-    if (changed)
-      this.setState({ clients: newClients });
+
+    if (changed) {
+      newFilteredClients.forEach((c, i) => {
+        if (c.id == clientId) {
+          newFilteredClients[i] = newClient;
+        }
+      });
+
+      this.setState({
+        clients: newClients,
+        filteredClients: newFilteredClients,
+      });
+    }
   };
 
   setClientFIO = (clientId, newFIO) => {
     let changed = false;
     let newClients = [...this.state.clients];
+    let newFilteredClients = [...this.state.filteredClients];
+    let newClient;
 
     newClients.forEach((c, i) => {
       if (c.id == clientId && (c.fam !== newFIO.fam || c.im !== newFIO.im || c.otch !== newFIO.otch)) {
-        let newClient = { ...c };
+        newClient = { ...c };
         newClient.fam = newFIO.fam;
         newClient.im = newFIO.im;
         newClient.otch = newFIO.otch;
+        newClient.isEdit = false;
         newClients[i] = newClient;
         changed = true;
       }
     });
-    if (changed)
-      this.setState({ clients: newClients });
+
+    if (changed) {
+      newFilteredClients.forEach((c, i) => {
+        if (c.id == clientId) {
+          newFilteredClients[i] = newClient;
+        }
+      });
+
+      this.setState({
+        clients: newClients,
+        filteredClients: newFilteredClients,
+      });
+    }
   };
 
   deleteClient = (clientId) => {
     let newClients = [...this.state.clients];
+    let newFilteredClients = [...this.state.filteredClients];
+
     newClients.forEach((c, i) => {
       if (c.id == clientId) {
         newClients.splice(i, 1);
         return;
       }
     });
-    this.setState({ clients: newClients });
+
+    newFilteredClients.forEach((c, i) => {
+      if (c.id == clientId) {
+        newFilteredClients.splice(i, 1);
+        return;
+      }
+    });
+
+    this.setState({
+      clients: newClients,
+      filteredClients: newFilteredClients,
+    });
   };
 
   addClient = () => {
     const currentClients = this.state.clients;
-    const newClientId = currentClients.length === 0? 1 : currentClients[currentClients.length - 1].id + 1;
+    const newClientId = currentClients.length === 0 ? 1 : currentClients[currentClients.length - 1].id + 1;
     const newClients = [...this.state.clients];
+    const newFilteredClients = [...this.state.filteredClients];
+
     const newClient = {
       id: newClientId,
       fam: '',
       im: '',
       otch: '',
-      balance: this.state.filter === 'blocked'? -1 : 0,
+      balance: this.state.filter === 'blocked' ? -1 : 0,
       isEdit: true,
-      isShown: true,
     }
+
     newClients.push(newClient);
-    this.setState({ clients: newClients });
+    newFilteredClients.push(newClient);
+
+    this.setState({
+      clients: newClients,
+      filteredClients: newFilteredClients,
+    });
   }
 
   filterClients = (e) => {
     const newFilter = e.target.value;
-    if (newFilter !== this.state.filter) {
-      let newClients = [...this.state.clients];
-      let changed = false;
 
-      const changeFlag = (c, i, flagValue) => {
-        const newClient = { ...c };
-        newClient.isShown = flagValue;
-        newClients[i] = newClient;
-        changed = true;
-      };
+    if (newFilter !== this.state.filter) {
+      let clients = this.state.clients;
+      let filteredClients = [];
 
       if (newFilter === 'all') {
-        newClients.forEach((c, i) => {
-          if (!c.isShown) {
-            changeFlag(c, i, true);
-          }
-        });
+        filteredClients = [...clients];
       } else if (newFilter === 'active') {
-        newClients.forEach((c, i) => {
-          if (c.balance >= 0 && !c.isShown) {
-            changeFlag(c, i, true);
-          } else if (c.balance < 0 && c.isShown) {
-            changeFlag(c, i, false);
-          }
-        });
+        filteredClients = clients.filter((c) => c.balance >= 0 );
       } else if (newFilter === 'blocked') {
-        newClients.forEach((c, i) => {
-          if (c.balance >= 0 && c.isShown) {
-            changeFlag(c, i, false);
-          } else if (c.balance < 0 && !c.isShown) {
-            changeFlag(c, i, true);
-          }
-        });
+        filteredClients = clients.filter((c) => c.balance < 0 );
       }
 
       this.setState({
         filter: newFilter,
+        filteredClients: filteredClients,
       });
-
-      if (changed) {
-        this.setState({
-          clients: newClients,
-        });
-      }
     }
   }
 
@@ -146,7 +165,7 @@ class MobileCompany extends React.PureComponent {
 
     console.log("MobileCompany render");
 
-    const clients = this.state.clients.map(client => {
+    const clients = this.state.filteredClients.map(client => {
       return <MobileClient key={client.id}
         client={client}
         onDelete={this.deleteClient}

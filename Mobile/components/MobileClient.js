@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 
-import './MobileClient.css';
+//import './MobileClient.css';
 
 class MobileClient extends React.PureComponent {
 
@@ -29,7 +29,7 @@ class MobileClient extends React.PureComponent {
   };
 
   componentWillReceiveProps = (newProps) => {
-    const {fam, im, otch} = this.state;
+    const { fam, im, otch } = this.state;
     const newClient = newProps.client;
 
     if (fam !== newClient.fam || im !== newClient.im || otch !== newClient.otch) {
@@ -85,7 +85,7 @@ class MobileClient extends React.PureComponent {
   render() {
     console.log("MobileClient id=" + this.props.client.id + " render");
 
-    const {fam, im, otch} = this.state;
+    const { fam, im, otch } = this.state;
 
     return (
       <div>
@@ -109,9 +109,9 @@ class MobileClient extends React.PureComponent {
             }
           </div>
           <div className='MobileClientBalance'>
-            <button onClick={this.decreaseBalance}>-</button>
+            <button onClick={this.decreaseBalance} className="MobileClientDecreaseBalance">-</button>
             <span>{this.state.balance}</span>
-            <button onClick={this.increaseBalance}>+</button>
+            <button onClick={this.increaseBalance} className="MobileClientIncreaseBalance">+</button>
           </div>
           <div className='MobileClientStatus'>
             {

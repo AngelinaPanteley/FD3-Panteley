@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import MobileClient from './MobileClient';
 
-import './MobileCompany.css';
+//import './MobileCompany.css';
 
 class MobileCompany extends React.PureComponent {
 
@@ -70,12 +70,12 @@ class MobileCompany extends React.PureComponent {
         newClient = { ...c };
         newClient.isEdit = false;
 
-        if(c.fam !== newFIO.fam || c.im !== newFIO.im || c.otch !== newFIO.otch) {
+        if (c.fam !== newFIO.fam || c.im !== newFIO.im || c.otch !== newFIO.otch) {
           newClient.fam = newFIO.fam;
           newClient.im = newFIO.im;
           newClient.otch = newFIO.otch;
         }
-        
+
         newClients[i] = newClient;
         changed = true;
       }
@@ -153,9 +153,9 @@ class MobileCompany extends React.PureComponent {
       if (newFilter === 'all') {
         filteredClients = [...clients];
       } else if (newFilter === 'active') {
-        filteredClients = clients.filter((c) => c.balance >= 0 );
+        filteredClients = clients.filter((c) => c.balance >= 0);
       } else if (newFilter === 'blocked') {
-        filteredClients = clients.filter((c) => c.balance < 0 );
+        filteredClients = clients.filter((c) => c.balance < 0);
       }
 
       this.setState({

@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+<div>
+  <div
+    className="MobileClient"
+  >
+    <span
+      className="MobileClientId"
+    >
+      1
+    </span>
+    <div
+      className="MobileClientFio"
+    >
+      <div
+        className="MobileClientFioContainer"
+      >
+        <span>
+          some fam some im some otch
+        </span>
+        <button
+          onClick={[Function]}
+        >
+          Edit
+        </button>
+      </div>
+    </div>
+    <div
+      className="MobileClientBalance"
+    >
+      <button
+        className="MobileClientDecreaseBalance"
+        onClick={[Function]}
+      >
+        -
+      </button>
+      <span>
+        0
+      </span>
+      <button
+        className="MobileClientIncreaseBalance"
+        onClick={[Function]}
+      >
+        +
+      </button>
+    </div>
+    <div
+      className="MobileClientStatus"
+    >
+      <span
+        className="MobileClientStatusActive"
+      >
+        Active
+      </span>
+    </div>
+    <div
+      className="MobileClientActions"
+    >
+      <button
+        onClick={[Function]}
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+`;

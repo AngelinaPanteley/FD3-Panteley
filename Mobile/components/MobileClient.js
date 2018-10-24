@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 
-//import './MobileClient.css';
+import './MobileClient.css';
 
 class MobileClient extends React.PureComponent {
 
@@ -88,7 +88,6 @@ class MobileClient extends React.PureComponent {
     const { fam, im, otch } = this.state;
 
     return (
-      <div>
         <div className='MobileClient'>
           <span className="MobileClientId">{this.props.client.id}</span>
           <div className='MobileClientFio'>
@@ -126,7 +125,6 @@ class MobileClient extends React.PureComponent {
             <button onClick={this.deleteHandle}>Delete</button>
           </div>
         </div>
-      </div>
     );
 
   }

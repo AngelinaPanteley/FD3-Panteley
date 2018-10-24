@@ -1,68 +1,143 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` 1`] = `
-<div>
+exports[`>>>MobileClient renders client correctly 1`] = `
+<div
+  className="MobileClient"
+>
+  <span
+    className="MobileClientId"
+  >
+    1
+  </span>
   <div
-    className="MobileClient"
+    className="MobileClientFio"
+  >
+    <div
+      className="MobileClientFioContainer"
+    >
+      <span>
+        some fam some im some otch
+      </span>
+      <button
+        onClick={[Function]}
+      >
+        Edit
+      </button>
+    </div>
+  </div>
+  <div
+    className="MobileClientBalance"
+  >
+    <button
+      className="MobileClientDecreaseBalance"
+      onClick={[Function]}
+    >
+      -
+    </button>
+    <span>
+      0
+    </span>
+    <button
+      className="MobileClientIncreaseBalance"
+      onClick={[Function]}
+    >
+      +
+    </button>
+  </div>
+  <div
+    className="MobileClientStatus"
   >
     <span
-      className="MobileClientId"
+      className="MobileClientStatusActive"
     >
-      1
+      Active
     </span>
-    <div
-      className="MobileClientFio"
+  </div>
+  <div
+    className="MobileClientActions"
+  >
+    <button
+      onClick={[Function]}
     >
-      <div
-        className="MobileClientFioContainer"
-      >
-        <span>
-          some fam some im some otch
-        </span>
-        <button
-          onClick={[Function]}
-        >
-          Edit
-        </button>
-      </div>
-    </div>
-    <div
-      className="MobileClientBalance"
+      Delete
+    </button>
+  </div>
+</div>
+`;
+
+exports[`>>>MobileClient renders editable client correctly 1`] = `
+<div
+  className="MobileClient"
+>
+  <span
+    className="MobileClientId"
+  >
+    222
+  </span>
+  <div
+    className="MobileClientFio"
+  >
+    <form
+      className="MobileClientFioForm"
+      onSubmit={[Function]}
     >
-      <button
-        className="MobileClientDecreaseBalance"
-        onClick={[Function]}
-      >
-        -
-      </button>
-      <span>
-        0
-      </span>
-      <button
-        className="MobileClientIncreaseBalance"
-        onClick={[Function]}
-      >
-        +
-      </button>
-    </div>
-    <div
-      className="MobileClientStatus"
+      <input
+        defaultValue="some fam2"
+        name="fam"
+        type="text"
+      />
+      <input
+        defaultValue="some im2"
+        name="im"
+        type="text"
+      />
+      <input
+        defaultValue="some otch2"
+        name="otch"
+        type="text"
+      />
+      <input
+        type="submit"
+        value="Save"
+      />
+    </form>
+  </div>
+  <div
+    className="MobileClientBalance"
+  >
+    <button
+      className="MobileClientDecreaseBalance"
+      onClick={[Function]}
     >
-      <span
-        className="MobileClientStatusActive"
-      >
-        Active
-      </span>
-    </div>
-    <div
-      className="MobileClientActions"
+      -
+    </button>
+    <span>
+      222
+    </span>
+    <button
+      className="MobileClientIncreaseBalance"
+      onClick={[Function]}
     >
-      <button
-        onClick={[Function]}
-      >
-        Delete
-      </button>
-    </div>
+      +
+    </button>
+  </div>
+  <div
+    className="MobileClientStatus"
+  >
+    <span
+      className="MobileClientStatusActive"
+    >
+      Active
+    </span>
+  </div>
+  <div
+    className="MobileClientActions"
+  >
+    <button
+      onClick={[Function]}
+    >
+      Delete
+    </button>
   </div>
 </div>
 `;

@@ -112,7 +112,7 @@ exports[`>>>MobileClient renders editable client correctly 1`] = `
       -
     </button>
     <span>
-      222
+      -1
     </span>
     <button
       className="MobileClientIncreaseBalance"
@@ -125,9 +125,9 @@ exports[`>>>MobileClient renders editable client correctly 1`] = `
     className="MobileClientStatus"
   >
     <span
-      className="MobileClientStatusActive"
+      className="MobileClientStatusBlocked"
     >
-      Active
+      Blocked
     </span>
   </div>
   <div

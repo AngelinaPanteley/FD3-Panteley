@@ -2,7 +2,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { expect as chaiExpect} from 'chai';
+import { expect as chaiExpect } from 'chai';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16.1';
 
@@ -24,8 +24,8 @@ describe('>>>MobileClient', () => {
   };
 
   const clientComponent = <MobileClient client={client} onDelete={() => { }}
-    onFIOChange={() => {}}
-    onBalanceChange={() => {}} />;
+    onFIOChange={() => { }}
+    onBalanceChange={() => { }} />;
 
   const component = renderer.create(clientComponent);
 
@@ -39,13 +39,13 @@ describe('>>>MobileClient', () => {
     fam: 'some fam2',
     im: 'some im2',
     otch: 'some otch2',
-    balance: 222,
+    balance: -1,
     isEdit: true,
   };
 
   const clientComponent2 = <MobileClient client={client2} onDelete={() => { }}
-    onFIOChange={() => {}}
-    onBalanceChange={() => {}} />;
+    onFIOChange={() => { }}
+    onBalanceChange={() => { }} />;
 
   const component2 = renderer.create(clientComponent2);
 
@@ -57,7 +57,7 @@ describe('>>>MobileClient', () => {
   //SHALLOW RENDERING
 
   let wrapper;
-  
+
   beforeEach(() => {
     wrapper = shallow(clientComponent);
   });
@@ -78,4 +78,48 @@ describe('>>>MobileClient', () => {
     chaiExpect(wrapper.find('.MobileClientStatus')).to.have.lengthOf(1);
   });
 
+  it('sets status correctly', () => {
+    chaiExpect(wrapper.state('isActive')).to.equal(true);
+    wrapper = shallow(clientComponent2);
+    chaiExpect(wrapper.state('isActive')).to.equal(false);
+  });
+
+  it('sets onBalanceChange properties correctly', () => {
+    const onBalanceChange = jest.fn();
+    const wrapper2 = shallow(
+      <MobileClient client={client} onDelete={() => { }}
+        onFIOChange={() => { }}
+        onBalanceChange={onBalanceChange} />
+    );
+
+    wrapper2.find('.MobileClientDecreaseBalance').simulate('click');
+
+    expect(onBalanceChange).toBeCalledWith(client.id, -1);
+  });
+
+  it('sets onBalanceChange properties correctly', () => {
+    const onBalanceChange = jest.fn();
+    const wrapper2 = shallow(
+      <MobileClient client={client} onDelete={() => { }}
+        onFIOChange={() => { }}
+        onBalanceChange={onBalanceChange} />
+    );
+
+    wrapper2.find('.MobileClientIncreaseBalance').simulate('click');
+
+    expect(onBalanceChange).toBeCalledWith(client.id, 1);
+  });
+
+  it('sets onDelete properties correctly', () => {
+    const onDelete = jest.fn();
+    const wrapper2 = shallow(
+      <MobileClient client={client} onDelete={onDelete}
+        onFIOChange={() => { }}
+        onBalanceChange={() => { }} />
+    );
+
+    wrapper2.find('.MobileClientActions button').simulate('click');
+
+    expect(onDelete).toBeCalledWith(client.id);
+  });
 });

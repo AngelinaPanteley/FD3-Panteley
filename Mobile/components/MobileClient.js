@@ -88,43 +88,43 @@ class MobileClient extends React.PureComponent {
     const { fam, im, otch } = this.state;
 
     return (
-        <div className='MobileClient'>
-          <span className="MobileClientId">{this.props.client.id}</span>
-          <div className='MobileClientFio'>
-            {
-              this.state.isEdit
-                ?
-                <form onSubmit={this.saveForm} className="MobileClientFioForm">
-                  <input type="text" defaultValue={fam} name="fam" />
-                  <input type="text" defaultValue={im} name="im" />
-                  <input type="text" defaultValue={otch} name="otch" />
-                  <input type="submit" value="Save" />
-                </form>
-                :
-                <div className="MobileClientFioContainer">
-                  <span>{fam + " " + im + " " + otch}</span>
-                  <button onClick={this.editButtonHandle}>Edit</button>
-                </div>
-            }
-          </div>
-          <div className='MobileClientBalance'>
-            <button onClick={this.decreaseBalance} className="MobileClientDecreaseBalance">-</button>
-            <span>{this.state.balance}</span>
-            <button onClick={this.increaseBalance} className="MobileClientIncreaseBalance">+</button>
-          </div>
-          <div className='MobileClientStatus'>
-            {
-              this.state.isActive
-                ?
-                <span className='MobileClientStatusActive'>Active</span>
-                :
-                <span className='MobileClientStatusBlocked'>Blocked</span>
-            }
-          </div>
-          <div className='MobileClientActions'>
-            <button onClick={this.deleteHandle}>Delete</button>
-          </div>
+      <div className='MobileClient'>
+        <span className="MobileClientId">{this.props.client.id}</span>
+        <div className='MobileClientFio'>
+          {
+            this.state.isEdit
+              ?
+              <form onSubmit={this.saveForm} className="MobileClientFioForm">
+                <input type="text" defaultValue={fam} name="fam" />
+                <input type="text" defaultValue={im} name="im" />
+                <input type="text" defaultValue={otch} name="otch" />
+                <input type="submit" value="Save" />
+              </form>
+              :
+              <div className="MobileClientFioContainer">
+                <span>{fam + " " + im + " " + otch}</span>
+                <button onClick={this.editButtonHandle}>Edit</button>
+              </div>
+          }
         </div>
+        <div className='MobileClientBalance'>
+          <button onClick={this.decreaseBalance} className="MobileClientDecreaseBalance">-</button>
+          <span>{this.state.balance}</span>
+          <button onClick={this.increaseBalance} className="MobileClientIncreaseBalance">+</button>
+        </div>
+        <div className='MobileClientStatus'>
+          {
+            this.state.isActive
+              ?
+              <span className='MobileClientStatusActive'>Active</span>
+              :
+              <span className='MobileClientStatusBlocked'>Blocked</span>
+          }
+        </div>
+        <div className='MobileClientActions'>
+          <button onClick={this.deleteHandle}>Delete</button>
+        </div>
+      </div>
     );
 
   }

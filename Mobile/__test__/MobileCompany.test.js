@@ -7,7 +7,6 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16.1';
 
 import MobileCompany from '../components/MobileCompany';
-import MobileClient from '../components/MobileClient.js';
 
 configure({ adapter: new Adapter() });
 

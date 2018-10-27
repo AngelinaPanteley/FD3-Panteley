@@ -217,7 +217,7 @@ exports[`>>>MobileCompany renders company correctly 1`] = `
           -
         </button>
         <span>
-          1
+          -1
         </span>
         <button
           className="MobileClientIncreaseBalance"
@@ -230,9 +230,9 @@ exports[`>>>MobileCompany renders company correctly 1`] = `
         className="MobileClientStatus"
       >
         <span
-          className="MobileClientStatusActive"
+          className="MobileClientStatusBlocked"
         >
-          Active
+          Blocked
         </span>
       </div>
       <div
